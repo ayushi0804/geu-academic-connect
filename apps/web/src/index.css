@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 40 22% 96%; --fg: 224 40% 13%; --card: 0 0% 100%; --muted: 40 18% 92%; --muted-fg: 225 14% 40%; --border: 38 14% 86%;
+  --primary: 238 62% 46%; --primary-fg: 0 0% 100%; --accent: 40 62% 52%;
+  --success: 152 60% 30%; --warning: 32 90% 38%; --danger: 2 68% 46%;
+  --sidebar: 224 52% 14%; --sidebar-fg: 220 25% 86%; --shadow: 224 40% 13%;
+}
+.dark {
+  --bg: 226 38% 8%; --fg: 40 20% 94%; --card: 226 34% 12%; --muted: 226 28% 17%; --muted-fg: 222 14% 68%; --border: 226 24% 22%;
+  --primary: 238 90% 74%; --primary-fg: 226 38% 8%; --accent: 40 70% 62%;
+  --success: 152 55% 52%; --warning: 36 92% 60%; --danger: 2 85% 68%;
+  --sidebar: 226 42% 6%; --sidebar-fg: 220 20% 80%; --shadow: 0 0% 0%;
+}
+@layer base {
+  html { color-scheme: light; }
+  html.dark { color-scheme: dark; }
+  body { @apply bg-bg font-sans text-fg antialiased; }
+  h1, h2, h3 { @apply font-display tracking-tight; }
+  :focus-visible { @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-bg; }
+  ::selection { background: hsl(var(--primary) / .25); }
+  dialog::backdrop { background: hsl(226 40% 6% / .6); backdrop-filter: blur(2px); }
+}
+@layer components {
+  .field { @apply w-full rounded-lg border border-border bg-card px-3 py-2 text-sm placeholder:text-muted-fg/70 disabled:cursor-not-allowed disabled:opacity-60; }
+  .field[aria-invalid='true'] { @apply border-danger; }
+  .th { @apply whitespace-nowrap px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-muted-fg; }
+  .td { @apply px-4 py-3 align-middle text-sm; }
+}
+@media print {
+  aside, header, .no-print { display: none !important; }
+  main { padding: 0 !important; }
+  body { background: white; color: black; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
