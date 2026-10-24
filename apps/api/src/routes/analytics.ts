@@ -83,7 +83,7 @@ router.get('/analytics/faculty', authenticate, requireRole('faculty'), validate(
   const asgs: any[] = await Assignment.find({ subject: { $in: subjectIds }, status: 'published' }).select('_id title subject dueDate section').lean();
   const pendingAgg = await Submission.aggregate([{ $match: { assignment: { $in: asgs.map((a) => a._id) }, status: 'submitted' } }, { $group: { _id: '$assignment', n: { $sum: 1 } } }]);
   const pendingGrading = pendingAgg.map((p: any) => ({ assignment: asgs.find((a) => String(a._id) === String(p._id)), pending: p.n })).filter((p) => p.assignment).sort((a, b) => b.pending - a.pending).slice(0, 8);
-  const draftAssessments = await (await import('../models')).Assessment.countDocuments({ subject: { $in: subjectIds }, status: 'draft' });
+  const draftAssessments = await (await import('../models/index.js')).Assessment.countDocuments({ subject: { $in: subjectIds }, status: 'draft' });
   ok(res, {
     classes: classes.map((c) => ({ ...c, averagePercentage: pm.get(String(c.subject._id)) ? r1(pm.get(String(c.subject._id)).avg) : null })),
     totals: { classes: fa.length, students: classes.reduce((a, c) => a + c.students, 0), pendingGradingCount: pendingGrading.reduce((a, p) => a + p.pending, 0), draftAssessments },

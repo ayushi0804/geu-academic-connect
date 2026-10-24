@@ -49,7 +49,7 @@ router.get('/files/:id/download', authenticate, asyncH(async (req, res) => {
   if (!isOid(req.params.id)) throw notFound();
   const f: any = await UploadedFile.findById(req.params.id).lean();
   if (!f || !(await canAccessFile(req.user!, f))) throw notFound('File not found'); // 404 avoids confirming existence
-  const { storage } = await import('../services/files');
+  const { storage } = await import('../services/files.js');
   const inline = f.purpose === 'avatar';
   res.setHeader('Content-Type', f.mimeType);
   res.setHeader('Content-Length', String(f.size));
