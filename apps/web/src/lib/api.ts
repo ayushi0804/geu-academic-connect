@@ -5,7 +5,7 @@ export class ApiError extends Error {
     super(message);
   }
 }
-const BASE = '/api/v1';
+const BASE = `${import.meta.env.VITE_API_URL}/api/v1`;
 type Opts = { method?: string; body?: unknown; query?: Record<string, unknown>; form?: FormData };
 
 const qs = (q?: Record<string, unknown>) => {
