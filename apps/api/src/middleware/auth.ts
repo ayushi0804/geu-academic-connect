@@ -11,7 +11,7 @@ export const COOKIE_NAME = 'gac_token';
 const cookieOpts = (): CookieOptions => ({
   httpOnly: true,
   secure: cookieSecure,
-  sameSite: 'lax',
+  sameSite: 'none',
   path: '/',
 });
 
